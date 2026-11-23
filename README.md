@@ -9,6 +9,7 @@ A small website for learning Moroccan Darija, built from *Darija in 6 Weeks – 
 - **Dialogue:** "Listen first" plays the whole dialogue once with the text blurred, then shows it. Also a shadowing mode (pause after each line) and a mode that plays only the other role so you answer as Lea.
 - **Quiz:** answers stay hidden until you tap *Show answer*; you mark yourself ✓ or ✗ and missed questions collect under *Review*.
 - **Vocabulary repository:** all weeks' words in one searchable list, with Anki export (TSV).
+- **Today page:** each day's tasks from the weekly rhythm plus the daily habits, with tick boxes and a week tracker. Set the start date once; the tasks per day live in `content/course.js` (`rhythm.days[].tasks`).
 - Sounds & numbers, weekly rhythm, sticky notes for your home (printable), resources.
 - Progress, notes and recordings are saved in your browser (backup/restore under *Voice & settings*).
 

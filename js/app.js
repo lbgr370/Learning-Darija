@@ -4,6 +4,7 @@ const $nav = document.getElementById('sidebar');
 
 function parseRoute() {
   const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+  if (parts[0] === 'today') return { page: 'today', tweek: parts[1], tday: parts[2] };
   if (parts[0] === 'week') return { page: 'week', week: parts[1], tab: parts[2] };
   return { page: parts[0] || '' };
 }
@@ -16,7 +17,7 @@ function render() {
   const r = parseRoute();
   $nav.innerHTML = Views.nav(r);
   const pages = {
-    '': () => Views.home(), start: () => Views.start(), week: () => Views.week(r.week, r.tab),
+    '': () => Views.home(), start: () => Views.start(), week: () => Views.week(r.week, r.tab), today: () => Views.today(r.tweek, r.tday),
     vocab: () => Views.vocab(), dialogues: () => Views.dialogues(), review: () => Views.review(),
     stickies: () => Views.stickies(), resources: () => Views.resources(), settings: () => Views.settings(),
   };
@@ -30,6 +31,8 @@ async function afterRender(r) {
   // mark which items have recordings
   const keys = new Set(await Recordings.keys().catch(() => []));
   document.querySelectorAll('[data-rec]').forEach(b => b.classList.toggle('has', keys.has(b.dataset.rec)));
+  const ss = document.getElementById('setStart');
+  if (ss) ss.onclick = () => { const v = document.getElementById('startDate').value; if (v) { Store.set('startDate', v); location.hash = '#/today'; render(); } };
   if (r.page === 'vocab') {
     const s = document.getElementById('vsearch');
     s.addEventListener('input', () => {
@@ -137,6 +140,15 @@ document.addEventListener('click', async e => {
 
 document.addEventListener('change', e => {
   const t = e.target;
+  if (t.dataset.progress && /^(plan|daily):/.test(t.dataset.progress)) {
+    Store.set(t.dataset.progress, t.checked);
+    t.closest('li') && t.closest('li').classList.toggle('done', t.checked);
+    const tr = document.getElementById('tracker');
+    if (tr) tr.innerHTML = Views.tracker(+tr.dataset.week, +tr.dataset.day);
+    const r = parseRoute(); const dn = document.querySelector('.daynav');
+    if (dn) { const tmp = document.createElement('div'); tmp.innerHTML = Views.today(r.tweek, r.tday); dn.innerHTML = tmp.querySelector('.daynav').innerHTML; const st = tmp.querySelector('.streak'), cur = document.querySelector('.streak'); if (cur) cur.remove(); if (st) document.querySelector('.daycard').appendChild(st); }
+    return;
+  }
   if (t.dataset.progress) { Store.set(t.dataset.progress, t.checked); $nav.innerHTML = Views.nav(parseRoute()); const tabs = document.querySelector('.tabs'); if (tabs) { const r = parseRoute(); const w = weekById(r.week); tabs.innerHTML = Views.sections.map(([k, x]) => `<a href="#/week/${w.id}/${k}" class="${k === (r.tab || 'vocab') ? 'active' : ''}">${x}${Views.sectionDone(w, k) ? ' ✓' : ''}</a>`).join(''); } }
   if ('toggleEn' in t.dataset) { Store.set('showEn', t.checked); document.querySelectorAll('.dialogue').forEach(x => x.classList.toggle('no-en', !t.checked)); }
 });
