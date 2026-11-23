@@ -30,6 +30,7 @@ const Views = {
     const link = (h, t) => `<a href="#/${h}" class="${route.page === h ? 'active' : ''}">${t}</a>`;
     return `
       ${link('', '🏠 Home')}
+      ${link('today', '📅 Today')}
       ${link('start', '🔤 Sounds & weekly rhythm')}
       <div class="navhead">Weeks</div>${weeks}
       <div class="navhead">Across all weeks</div>
@@ -52,6 +53,7 @@ const Views = {
       <h2>How this plan works</h2>
       <ul class="principles">${c.principles.map(p => `<li><strong>${esc(p.title)}</strong> ${fmt(p.text)}</li>`).join('')}</ul>
       <p class="note">${fmt(c.spellingNote)}</p>
+      <div class="cards" style="margin-top:16px">${Views.todayCard()}</div>
       <h2>Your weeks</h2>
       <div class="cards">${DARIJA.weeks.map(w => {
         const p = Views.weekProgress(w);
@@ -112,6 +114,7 @@ const Views = {
       <h1>${esc(w.title)}</h1>
       <p class="cando"><strong>By Sunday you can:</strong> ${fmt(w.canDo)}</p>
       ${(w.notes || []).map(n => `<p class="note">${fmt(n)}</p>`).join('')}
+      <p><a href="#/today/${w.id}/0">📅 Day-by-day plan and tracker for this week →</a></p>
       <div class="tabs">${this.sections.map(([k, t]) => `<a href="#/week/${w.id}/${k}" class="${k === tab ? 'active' : ''}">${t}${this.sectionDone(w, k) ? ' ✓' : ''}</a>`).join('')}</div>
       <section class="panel">${body ? body.call(this, w) : ''}</section>
       <div class="pager">

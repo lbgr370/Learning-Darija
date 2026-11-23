@@ -35,14 +35,41 @@ DARIJA.setCourse({
 
   rhythm: {
     intro: 'Each week has the same seven-day loop, so you never have to decide what to do. Only the content changes.',
+    // tasks = the checklist on the Today page; tab = a tab of the week, page = a page of the site
     days: [
-      { day: 'Mon', what: 'Read the week\'s **vocabulary** aloud, add it to Anki, put up the new sticky notes', time: '30 min' },
-      { day: 'Tue', what: '**Grammar** point + **dialogue**: read it aloud 3×, then shadow it', time: '30 min' },
-      { day: 'Wed', what: 'Anki 10 min + **exercises 1–2**', time: '30 min' },
-      { day: 'Thu', what: '**Mission** with your boyfriend (over dinner or on a walk)', time: '15–20 min' },
-      { day: 'Fri', what: 'Listening: a Moroccan YouTube video, vlog or song, plus Anki', time: '30 min' },
-      { day: 'Sat', what: '**Quiz** + **exercise 3** + write 3 WhatsApp messages to him in Darija', time: '45 min' },
-      { day: 'Sun', what: 'Review the whole week aloud, redo any quiz questions you missed (see Review), rest', time: '30–45 min' },
+      { day: 'Mon', what: 'Read the week\'s **vocabulary** aloud, add it to Anki, put up the new sticky notes', time: '30 min', tasks: [
+        { text: 'Read the week\'s **vocabulary** aloud', tab: 'vocab' },
+        { text: 'Add it to **Anki** (use the export button on the Vocabulary tab)', tab: 'vocab' },
+        { text: 'Put up the new **sticky notes**', page: 'stickies' },
+      ] },
+      { day: 'Tue', what: '**Grammar** point + **dialogue**: read it aloud 3×, then shadow it', time: '30 min', tasks: [
+        { text: 'Do the **grammar** point', tab: 'grammar' },
+        { text: 'Listen to the **dialogue**, then read it aloud 3×', tab: 'dialogue' },
+        { text: '**Shadow** the dialogue', tab: 'dialogue' },
+      ] },
+      { day: 'Wed', what: 'Anki 10 min + **exercises 1–2**', time: '30 min', tasks: [
+        { text: '**Anki**, 10 minutes' },
+        { text: '**Exercise 1**', tab: 'exercises' },
+        { text: '**Exercise 2**', tab: 'exercises' },
+      ] },
+      { day: 'Thu', what: '**Mission** with your boyfriend (over dinner or on a walk)', time: '15–20 min', tasks: [
+        { text: '**Mission** with your boyfriend (over dinner or on a walk)', tab: 'mission' },
+        { text: 'Write down what he corrected', tab: 'mission' },
+      ] },
+      { day: 'Fri', what: 'Listening: a Moroccan YouTube video, vlog or song, plus Anki', time: '30 min', tasks: [
+        { text: '**Listening:** a Moroccan YouTube video, vlog or song', page: 'resources' },
+        { text: '**Anki**' },
+      ] },
+      { day: 'Sat', what: '**Quiz** + **exercise 3** + write 3 WhatsApp messages to him in Darija', time: '45 min', tasks: [
+        { text: 'Do the **quiz**', tab: 'quiz' },
+        { text: '**Exercise 3**', tab: 'exercises' },
+        { text: 'Write **3 WhatsApp messages** to him in Darija' },
+      ] },
+      { day: 'Sun', what: 'Review the whole week aloud, redo any quiz questions you missed (see Review), rest', time: '30–45 min', tasks: [
+        { text: '**Review** the whole week aloud', tab: 'vocab' },
+        { text: 'Redo the **quiz questions you missed**', page: 'review' },
+        { text: 'Rest 🫖' },
+      ] },
     ],
     daily: [
       'Anki review (whatever\'s due)',
